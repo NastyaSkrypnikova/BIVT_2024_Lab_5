@@ -78,6 +78,12 @@ public class Program
         return answer;
     }
 
+    public double GetDistance(double v, double a, double t)
+    {
+        double s = 0;
+        s = v * t + (a * t * t) / 2;
+        return s;
+    }
     public int Task_1_3a(double v1, double a1, double v2, double a2, int time)
     {
         int answer = 0;
@@ -85,12 +91,6 @@ public class Program
         // code here
 
         // create and use GetDistance(v, a, t); t - hours
-        static double GetDistance(double v, double a, double t)
-        {
-            double s = 0;
-            s = v * t + (a * t * t) / 2;
-            return s;
-        }
         if (time <= 0 || v1 <= 0 || v2 <= 0) return 0;
         else if (GetDistance(v1, a1, time) == GetDistance(v2, a2, time)) return 0;
         else if (GetDistance(v1, a1, time) > GetDistance(v2, a2, time)) return 1;
@@ -104,12 +104,6 @@ public class Program
     public int Task_1_3b(double v1, double a1, double v2, double a2)
     {
         int answer = 0;
-        static double GetDistance(double v, double a, double t)
-        {
-            double s = 0;
-            s = v * t + (a * t * t) / 2;
-            return s;
-        }
 
         // code here
 
@@ -1101,14 +1095,30 @@ public class Program
     {
         int csf = 0;
         double doY = function(a);
+        bool dowasY = false;
+        if (doY == 0) dowasY = true;
         for (double x = a + h; x <= b; x += h)
         {
             double curY = function(x);
+            if (dowasY)
+            {
+                if (curY != 0)
+                {
+                    dowasY = false;
+                    doY = curY;
+                    continue;
+                }
+                else
+                {
+                    doY = curY;
+                }
+            }
             if (Math.Sign(curY) != Math.Sign(doY) && doY != 0)
             {
                 csf++;
             }
             doY = curY;
+            dowasY = (curY == 0);
         }
         return csf;
     }
